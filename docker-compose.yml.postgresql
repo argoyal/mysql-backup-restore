@@ -1,0 +1,62 @@
+version: '2'
+services:
+    data:
+        image: silintl/data-volume:latest
+        volumes:
+          - ./application:/data
+
+    db:
+        image: postgres:latest
+        volumes_from:
+            - data
+        ports:
+            - "5432"
+        environment:
+            POSTGRES_PASSWORD: r00tp@ss!
+            DB_ROOT_PASSWORD: r00tp@ss!
+            DB_DATABASE: world
+#            DB_DATABASE: employees
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+            - "8001:80"
+        environment:
+            PMA_HOST: db
+            PMA_USER: root
+            PMA_PASSWORD: r00tp@ss!
+
+    restore:
+        build: ./
+        volumes_from:
+            - data
+#        volumes:
+#            - ./test/world.sql.gz:/tmp/world.sql.gz
+#            - ./test/employees.sql.gz:/tmp/employees.sql.gz
+        env_file:
+            - ./local.env
+        environment:
+            DB_HOST: db
+            DB_USER: root
+            DB_PASSWORD: r00tp@ss!
+            POSTGRES_USER: root
+            POSGRES_PASSWORD: r00tp@ss!
+            DB_NAMES: world #employees
+            MODE: restore
+            CRON_SCHEDULE: "* * * * *"
+
+    backup:
+        build: ./
+        volumes_from:
+            - data
+        env_file:
+            - ./local.env
+        environment:
+            DB_HOST: db
+            DB_USER: root
+            DB_PASSWORD: r00tp@ss!
+            POSTGRES_USER: root
+            POSGRES_PASSWORD: r00tp@ss!
+            DB_NAMES: world #employees
+            MODE: backup
+            CRON_SCHEDULE: "* * * * *"

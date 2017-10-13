@@ -1,5 +1,5 @@
 # mysql-backup-restore
-Service to backup and/or restore mysql databases using S3
+Service to backup and/or restore MySQL or PostgreSQL databases using S3
 
 ## How to use it
 1. Create an S3 bucket to hold your backups
@@ -16,9 +16,13 @@ Service to backup and/or restore mysql databases using S3
 
 `DB_NAMES=name1 name2 name3 ...`
 
-`MYSQL_USER=`
+`DB_USER=`
 
-`MYSQL_PASSWORD=`
+`DB_PASSWORD=`
+
+`DB_OPTIONS=opt1 opt2 opt3 ...` optional arguments to supply to the backup or restore commands
+
+`DB_ENGINE=[mysql|postgresql]`
 
 `AWS_ACCESS_KEY=` used for S3 interactions
 
@@ -32,12 +36,20 @@ Service to backup and/or restore mysql databases using S3
 This image is built automatically on Docker Hub as [silintl/mysql-backup-restore](https://hub.docker.com/r/silintl/mysql-backup-restore/)
 
 ## Playing with it locally
-You'll need [Docker](https://www.docker.com/get-docker) and [Make](https://www.gnu.org/software/make/)
+You'll need [Docker](https://www.docker.com/get-docker), [Docker Compose](https://docs.docker.com/compose/install/), and [Make](https://www.gnu.org/software/make/).
 
 1. `cp local.env.dist local.env` and supply variables
-2. Ensure you have a `gz` dump in your S3 bucket to be used for testing.  A test database is provided as part of this project in the `test` folder.
-3. `make`
+2. Copy the appropriate files based on the database you are using.
+* MySQL
+** `cp docker-compose.yml.mysql docker-compose.yml`
+** `cp test/employees-mysql.sql.gz test/employees.sql.gz`
+** `cp test/world-mysql.sql.gz test/world.sql.gz`
+* PostgreSQL
+** `cp docker-compose.yml.postgresql docker-compose.yml`
+** `cp test/employees-postgresql.sql.gz test/employees.sql.gz`
+** `cp test/world-postgresql.sql.gz test/world.sql.gz`
+3. Ensure you have a `gz` dump in your S3 bucket to be used for testing.  A test database is provided as part of this project in the `test` folder.
+4. `make`
 
 A UI into the local database will then be running at [http://localhost:8001](http://localhost:8001)
  
-A couple of test databases are provided in the `test` folder if needed.

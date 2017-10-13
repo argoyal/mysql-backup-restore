@@ -5,6 +5,7 @@ RUN apk update \
                        ca-certificates openssl \
                        bash \
                        mysql-client \
+                       postgresql-client \
                        python py-pip \
  && update-ca-certificates \
  && pip install s3cmd python-magic
