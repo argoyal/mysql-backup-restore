@@ -35,9 +35,10 @@ services:
         env_file:
             - ./local.env
         environment:
-            MYSQL_HOST: db
-            MYSQL_USER: root
-            MYSQL_PASSWORD: r00tp@ss!
+            DB_ENGINE: mysql
+            DB_HOST: db
+            DB_USER: root
+            DB_PASSWORD: r00tp@ss!
             DB_NAMES: world #employees
             MODE: restore
             CRON_SCHEDULE: "* * * * *"
@@ -49,9 +50,10 @@ services:
         env_file:
             - ./local.env
         environment:
-            MYSQL_HOST: db
-            MYSQL_USER: root
-            MYSQL_PASSWORD: r00tp@ss!
+            DB_ENGINE: mysql
+            DB_HOST: db
+            DB_USER: root
+            DB_PASSWORD: r00tp@ss!
             DB_NAMES: world #employees
             MODE: backup
             CRON_SCHEDULE: "* * * * *"
