@@ -42,12 +42,12 @@ You'll need [Docker](https://www.docker.com/get-docker), [Docker Compose](https:
 2. Copy the appropriate files based on the database you are using.
 * MySQL
 ** `cp docker-compose.yml.mysql docker-compose.yml`
-** `cp test/employees-mysql.sql.gz test/employees.sql.gz`
-** `cp test/world-mysql.sql.gz test/world.sql.gz`
+** `s3cmd put test/employees-mysql.sql.gz ${S3_BUCKET}/employees.sql.gz`
+** `s3cmd put test/world-mysql.sql.gz     ${S3_BUCKET}/world.sql.gz`
 * PostgreSQL
 ** `cp docker-compose.yml.postgresql docker-compose.yml`
-** `cp test/employees-postgresql.sql.gz test/employees.sql.gz`
-** `cp test/world-postgresql.sql.gz test/world.sql.gz`
+** `s3cmd put test/employees-postgresql.sql.gz ${S3_BUCKET}/employees.sql.gz`
+** `s3cmd put test/world-postgresql.sql.gz     ${S3_BUCKET}/world.sql.gz`
 3. Ensure you have a `gz` dump in your S3 bucket to be used for testing.  A test database is provided as part of this project in the `test` folder.
 4. `make`
 
